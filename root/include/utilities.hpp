@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <utility>
 #include <string>
 #include <vector>
 #include <chrono>
@@ -41,27 +42,6 @@ namespace ASWL {
 		}
 		template<typename T, typename...Args> T VariadicAdd(T value, Args...args) {
 			return value + VariadicAdd<T>(args...);
-		}
-
-		template<typename T> void Logger(T override, bool useDateTime = false) {
-
-			std::lock_guard<std::mutex> lock(mu);
-
-			if (useDateTime)
-				std::cerr << GetDateTime() << " |     | " << override << std::endl;
-			else
-				std::cerr << override;
-		}
-		template<typename ERRNUM, typename ERRMSG> void Logger(ERRNUM errorNumber, ERRMSG errorMessage) {
-
-			std::lock_guard<std::mutex> lock(mu);
-			std::cerr << GetDateTime() << " |" << errorNumber << "| " << errorMessage << std::endl;
-		}
-		template<typename ERRNUM, typename...ERRMSG> void Logger(ERRNUM errorNumber, ERRMSG...errorMessage) {
-
-			std::lock_guard<std::mutex> lock(mu);
-
-			std::cerr << GetDateTime() << " |" << errorNumber << "| " << VariadicAdd(errorMessage...) << std::endl;
 		}
 
 		std::vector<std::string> split(std::string input, char delimiter = ' ');
@@ -103,6 +83,14 @@ namespace ASWL {
 			T width;
 			T height;
 		};
+		template<typename T> Dimensions2D<T> make_2d_dimension(std::pair<T, T> pair) {
+
+			Dimensions2D<T> ret;
+			ret.width = pair.first;
+			ret.height = pair.second;
+
+			return ret;
+		};
 		template<typename T> Dimensions2D<T> make_2d_dimension(T width, T height) {
 
 			Dimensions2D<T> ret;
@@ -111,6 +99,12 @@ namespace ASWL {
 
 			return ret;
 		}
+
+		struct Version {
+			int MAJOR{ 0 };
+			int MINOR{ 0 };
+			int PATCH{ 0 };
+		};
 	}
 }
 
