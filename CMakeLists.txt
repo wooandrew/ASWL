@@ -2,7 +2,7 @@
 
 cmake_minimum_required (VERSION 3.8)
 
-set(PROJECT_VERSION "0.1")
+set(PROJECT_VERSION "0.2.0")
 project(ASWL VERSION ${PROJECT_VERSION})
 
 
@@ -13,6 +13,7 @@ set(VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # Link
 include_directories("${CMAKE_SOURCE_DIR}/root/include")
+
 link_directories("${CMAKE_SOURCE_DIR}/lib")
 
 # Directories
