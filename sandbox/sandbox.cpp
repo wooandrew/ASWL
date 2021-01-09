@@ -4,16 +4,11 @@
 #include <logger.hpp>
 
 using namespace ASWL;
+namespace util = ASWL::Utilities;
 
 int TestNamespaceUtilities() {
 
-	util::_uLogger("Hello World", true);
-
-	std::string error = "xxxxx";
-	std::string passArgs[] = { "Hello ", "World, @ [", "Andrew", "]." };
-	util::_uLogger(error, std::string("ss"), passArgs[0], passArgs[1], passArgs[2], passArgs[3]);
-	util::_uLogger('\n', false);
-	util::_uLogger(error.c_str(), "ss");
+	Logger::logger("XXXXX", "Hello World!", true);
 
 	std::vector<std::string> rt = util::split("\nHello World! 22223,232,1212", ',');
 
@@ -44,30 +39,6 @@ int TestNamespaceUtilities() {
 	dt2.UpdateDeltaTime();
 
 	std::cout << x << " -- " << dt2.GetDeltaTime() << " ----- " << tFPS / 10000000 << std::endl;
-
-	std::ifstream fileExists("file.txt");
-
-	if (!fileExists) {
-		std::ofstream file("log.OElog");
-		file << "CREATED -> " << util::GetDateTime("ctd");
-	}
-
-	std::fstream file("file.txt", std::ios::out | std::ios::app);
-
-	util::RedirectIOStream(std::ref(file), 1);
-	util::_uLogger("RedirectIOStream test -> cerr", true);
-	util::RedirectIOStream(std::ref(file), 6);
-	util::_uLogger("UndirectIOStream test -> cerr", true);
-	util::RedirectIOStream(std::ref(file), 1, true);
-	util::RedirectIOStream(std::ref(file), 6);
-
-	util::Version version;
-	version.MINOR = 1;
-
-	std::cout << "VERSION: " << version.MAJOR << "." << version.MINOR << "." << version.PATCH << std::endl;
-
-	util::Logger __logger;
-	__logger.log("ZXXXX", "Hello World.");
 
 	return 0;
 }

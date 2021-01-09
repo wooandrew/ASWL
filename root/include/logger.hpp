@@ -1,86 +1,58 @@
-// ASWL | logger.hpp :: Andrew Woo, 2019-2020
+// ASWL (c) 2021 Andrew Woo
+// Website: https://wooandrew.tech https://wooandrew.github.io
+// Email: seungminleader@gmail.com
+
+/* MIT License
+ *
+ * Copyright (c) 2021 Andrew Woo
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+**/
 
 #pragma once
 
-#ifndef ASWL_UTILITIES_LOGGER
-#define ASWL_UTILITIES_LOGGER
+#ifndef ASWL_LOGGER
+#define ASWL_LOGGER
+
+#include <iostream>
+#include <utility>
+#include <mutex>
 
 #include "utilities.hpp"
 
-#include <fstream>
-#include <streambuf>
+namespace ASWL::Logger {
 
-namespace ASWL::utilities {
+    template <typename ... MSGS>
+    void logger(bool _endLine, MSGS&& ... _msgs) {
 
-	// Uninstantiated loggers
-	template<typename T> void _uLogger(T override, bool useDateTime = false) {
+        if (_endLine) {
+            ((std::clog << std::forward<ERRMSG>(_msgs) << ' '), ...) << std::endl;
+        }
+    }
 
-		std::lock_guard<std::mutex> lock(mu);
+    template<typename ERRNUM, typename ... ERRMSG> 
+    void logger(ERRNUM _num, ERRMSG&& ... _msgs) {
 
-		if (useDateTime)
-			std::cerr << GetDateTime() << " |     | " << override << std::endl;
-		else
-			std::cerr << override;
-	}
-	template<typename ERRCODE, typename ERRMSG> void _uLogger(ERRCODE errorCode, ERRMSG errorMessage) {
-
-		std::lock_guard<std::mutex> lock(mu);
-		std::cerr << GetDateTime() << " |" << errorCode << "| " << errorMessage << std::endl;
-	}
-	template<typename ERRCODE, typename...ERRMSG> void _uLogger(ERRCODE errorCode, ERRMSG...errorMessage) {
-
-		std::lock_guard<std::mutex> lock(mu);
-		std::cerr << GetDateTime() << " |" << errorCode << "| " << VariadicAdd(errorMessage...) << std::endl;
-	}
-
-	template<typename T> void _uLogger(std::ostream& __stream, T override, bool useDateTime = false) {
-
-		std::lock_guard<std::mutex> lock(mu);
-
-		if (useDateTime)
-			__stream << GetDateTime() << " |     | " << override << std::endl;
-		else
-			__stream << override;
-	}
-	template<typename ERRCODE, typename ERRMSG> void _uLogger(std::ostream& __stream, ERRCODE errorCode, ERRMSG errorMessage) {
-
-		std::lock_guard<std::mutex> lock(mu);
-		__stream << GetDateTime() << " |" << errorCode << "| " << errorMessage << std::endl;
-	}
-	template<typename ERRCODE, typename...ERRMSG> void _uLogger(std::ostream& __stream, ERRCODE errorCode, ERRMSG...errorMessage) {
-		std::lock_guard<std::mutex> lock(mu);
-		__stream << GetDateTime() << " |" << errorCode << "| " << VariadicAdd(errorMessage...) << std::endl;
-	}
-
-	// Instanced logger
-	class Logger {
-
-	public:
-
-		Logger();
-		Logger(std::streambuf* _stream);
-
-		void SetStream(std::streambuf* _stream);
-
-		template <typename T> void log(T override, bool useDateTime = false) {
-			if (__Logger == __Logger_::ENABLED)
-				_uLogger(__log, override, useDateTime);
-		}
-
-		template <typename ERRCODE, typename...ERRMSG> void log(ERRCODE errorCode, ERRMSG...errorMessage) {
-			if (__Logger == __Logger_::ENABLED)
-				_uLogger(__log, errorCode, errorMessage...);
-		}
-
-		enum class __Logger_ {
-			ENABLED,
-			DISABLED
-		}; __Logger_ __Logger;
-
-	private:
-		std::ostream __log;
-	};
-
+        std::lock_guard<std::mutex> lock(ASWL::Utilities::mu);
+        std::clog << ASWL::Utilities::GetDateTime() << " |" << _num << '|';
+        ((std::clog << ' ' << std::forward<ERRMSG>(_msgs)), ...) << std::endl;
+    }
 }
 
-#endif // !ASWL_UTILITIES_LOGGER
+#endif // !ASWL_LOGGER
