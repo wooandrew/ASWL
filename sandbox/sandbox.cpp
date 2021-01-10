@@ -40,6 +40,10 @@ int TestNamespaceUtilities() {
 
 	std::cout << x << " -- " << dt2.GetDeltaTime() << " ----- " << tFPS / 10000000 << std::endl;
 
+	std::fstream file("out.txt", std::ios::out | std::ios::app);
+	Logger::SetLogStream(std::ref(file));
+	Logger::logger("XXXXX", "Hello World!");
+
 	return 0;
 }
 

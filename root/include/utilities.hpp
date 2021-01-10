@@ -30,6 +30,7 @@
 #ifndef ASWL_UTILITIES
 #define ASWL_UTILITIES
 
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <chrono>
@@ -48,6 +49,8 @@ namespace ASWL::Utilities {
 	template<typename T, typename...Args> T VariadicAdd(T value, Args ... args) {
 		return value + VariadicAdd<T>(args...);
 	}
+
+	std::string ReadFile(const std::string& _path, std::ios::_Openmode _openMode);
 
 	std::vector<std::string> split(const std::string& _input, char delimiter = ' ');
 

@@ -31,7 +31,9 @@
 
 #include <ctime>
 #include <sstream>
-#include <iomanip>
+#include <fstream>
+
+#include "logger.hpp"
 
 namespace ASWL::Utilities {
 
@@ -51,6 +53,26 @@ namespace ASWL::Utilities {
 			oss << std::put_time(std::localtime(&timeNow_t), format.c_str());
 
 		return oss.str();
+	}
+
+	std::string ReadFile(const std::string& _path, std::ios::_Openmode _openMode) {
+
+		std::string data = "";
+
+		std::ifstream input(_path, _openMode);
+		if (input) {
+
+			input.seekg(0, std::ios::end);
+			data.resize(input.tellg());
+
+			input.seekg(0, std::ios::beg);
+			input.read(&data[0], data.size());
+			input.close();
+		}
+		else
+			Logger::logger("     ", "Error reading file at ", _path);
+
+		return data;
 	}
 
 	std::vector<std::string> split(const std::string& _input, char delimiter) {

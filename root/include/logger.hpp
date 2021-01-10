@@ -32,17 +32,28 @@
 
 #include <iostream>
 #include <utility>
+#include <fstream>
 #include <mutex>
 
 #include "utilities.hpp"
 
 namespace ASWL::Logger {
 
+    namespace {
+
+        // Holds instance of std::clog
+        static std::streambuf* stream_buffer_clog_default__ = std::clog.rdbuf();
+        static std::streambuf* stream_buffer_current__ = stream_buffer_clog_default__;
+    }
+
+    void SetLogStream();
+    void SetLogStream(std::fstream& file);
+
     template <typename ... MSGS>
     void logger(bool _endLine, MSGS&& ... _msgs) {
 
         if (_endLine) {
-            ((std::clog << std::forward<ERRMSG>(_msgs) << ' '), ...) << std::endl;
+            ((std::clog << std::forward<MSGS>(_msgs) << ' '), ...) << std::endl;
         }
     }
 

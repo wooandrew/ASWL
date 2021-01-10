@@ -24,3 +24,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 **/
+
+#include "logger.hpp"
+
+namespace ASWL::Logger {
+
+    void SetLogStream() {
+        std::clog.rdbuf(stream_buffer_clog_default__);
+    }
+    void SetLogStream(std::fstream& file) {
+        stream_buffer_current__ = file.rdbuf();
+        std::clog.rdbuf(stream_buffer_current__);
+    }
+}
