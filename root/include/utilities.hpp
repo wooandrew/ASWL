@@ -50,7 +50,7 @@ namespace ASWL::Utilities {
 		return value + VariadicAdd<T>(args...);
 	}
 
-	std::string ReadFile(const std::string& _path, std::ios::openmode _openMode);
+	std::string ReadFile(const std::string& _path, std::ios::openmode _openmode);
 
 	std::vector<std::string> split(const std::string& _input, char delimiter = ' ');
 

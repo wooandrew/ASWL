@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 
 #include <utilities.hpp>
 #include <logger.hpp>

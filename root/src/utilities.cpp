@@ -55,11 +55,11 @@ namespace ASWL::Utilities {
 		return oss.str();
 	}
 
-	std::string ReadFile(const std::string& _path, std::ios::openmode _openMode) {
+	std::string ReadFile(const std::string& _path, std::ios::openmode _openmode) {
 
 		std::string data = "";
 
-		std::ifstream input(_path, _openMode);
+		std::ifstream input(_path, _openmode);
 		if (input) {
 
 			input.seekg(0, std::ios::end);
