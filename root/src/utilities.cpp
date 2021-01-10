@@ -55,7 +55,7 @@ namespace ASWL::Utilities {
 		return oss.str();
 	}
 
-	std::string ReadFile(const std::string& _path, std::ios::_Openmode _openMode) {
+	std::string ReadFile(const std::string& _path, std::ios::openmode _openMode) {
 
 		std::string data = "";
 
