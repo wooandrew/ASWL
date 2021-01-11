@@ -25,7 +25,7 @@
  * SOFTWARE.
 **/
 
-#include "utilities.hpp"
+#include "ASWL/utilities.hpp"
 
 #include <iostream>
 
@@ -33,7 +33,7 @@
 #include <sstream>
 #include <fstream>
 
-#include "logger.hpp"
+#include "ASWL/logger.hpp"
 
 namespace ASWL::Utilities {
 
