@@ -45,6 +45,8 @@ int TestNamespaceUtilities() {
 	Logger::SetLogStream(std::ref(file));
 	Logger::logger("XXXXX", "Hello World!");
 
+	std::cout << util::strip("Hello World", "lo") << std::endl;
+
 	return 0;
 }
 

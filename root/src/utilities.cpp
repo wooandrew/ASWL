@@ -88,6 +88,30 @@ namespace ASWL::Utilities {
 		return ret;
 	}
 
+	std::string strip(const std::string& _str, const std::string& _tokens) {
+
+		std::string ret = "";
+		bool tokenFound = false;
+
+		for (char val : _str) {
+
+			for (char token : _tokens) {
+
+				if (val == token) {
+					tokenFound = true;
+					break;
+				}
+			}
+
+			if (!tokenFound)
+				ret += val;
+
+			tokenFound = false;
+		}
+
+		return ret;
+	}
+
 	double FramesPerSecond::FPS = 0;
 	int FramesPerSecond::framesPassed = 0;
 	bool FramesPerSecond::firstCall = false;

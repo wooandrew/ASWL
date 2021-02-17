@@ -53,6 +53,7 @@ namespace ASWL::Utilities {
 	std::string ReadFile(const std::string& _path, std::ios::openmode _openmode);
 
 	std::vector<std::string> split(const std::string& _input, char delimiter = ' ');
+	std::string strip(const std::string& _str, const std::string& _tokens);
 
 	struct FramesPerSecond {
 
