@@ -36,9 +36,9 @@
 
 namespace ASWL::Timers {
 
-	class time_exception : public std::exception {
+	class time_exception : public std::runtime_error {
 	public:
-		time_exception(const char* _str) : std::exception(_str) {};
+		time_exception(const char* _str) : std::runtime_error(_str) {};
 	};
 
 	class ElapsedTime {
