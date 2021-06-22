@@ -1,5 +1,5 @@
 // ASWL (c) 2021 Andrew Woo
-// Website: https://wooandrew.tech https://wooandrew.github.io
+// Website: https://wooandrew.dev https://wooandrew.github.io
 // Email: seungminleader@gmail.com
 
 /* MIT License
@@ -54,39 +54,6 @@ namespace ASWL::Utilities {
 
 	std::vector<std::string> split(const std::string& _input, char delimiter = ' ');
 	std::string strip(const std::string& _str, const std::string& _tokens);
-
-	struct FramesPerSecond {
-
-		// Something is wrong with this utility. I think. I can't be sure.
-
-		FramesPerSecond() = delete;
-
-		static double GetFPS();
-		static void UpdateFPS(bool reset = false);
-
-	private:
-		static double FPS;
-		static int framesPassed;
-		static bool firstCall;
-	};
-
-	struct DeltaTime {
-
-		DeltaTime();
-
-		double GetDeltaTime();
-		void UpdateDeltaTime(bool reset = false);
-
-	private:
-
-		std::chrono::time_point<std::chrono::high_resolution_clock> start;
-		std::chrono::time_point<std::chrono::high_resolution_clock> stop;
-
-		double deltaTime;
-		double lastTime;
-
-		bool firstCall;
-	};
 }
 
 #endif // !ASWL_UTILITIES

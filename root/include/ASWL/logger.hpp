@@ -1,5 +1,5 @@
 // ASWL (c) 2021 Andrew Woo
-// Website: https://wooandrew.tech https://wooandrew.github.io
+// Website: https://wooandrew.dev https://wooandrew.github.io
 // Email: seungminleader@gmail.com
 
 /* MIT License

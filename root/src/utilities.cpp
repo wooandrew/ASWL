@@ -1,5 +1,5 @@
 // ASWL (c) 2021 Andrew Woo
-// Website: https://wooandrew.tech https://wooandrew.github.io
+// Website: https://wooandrew.dev https://wooandrew.github.io
 // Email: seungminleader@gmail.com
 
 /* MIT License
@@ -25,15 +25,12 @@
  * SOFTWARE.
 **/
 
-#include "ASWL/utilities.hpp"
-
-#include <iostream>
+#include <ASWL/utilities.hpp>
+#include <ASWL/logger.hpp>
 
 #include <ctime>
 #include <sstream>
 #include <fstream>
-
-#include "ASWL/logger.hpp"
 
 namespace ASWL::Utilities {
 
@@ -110,77 +107,5 @@ namespace ASWL::Utilities {
 		}
 
 		return ret;
-	}
-
-	double FramesPerSecond::FPS = 0;
-	int FramesPerSecond::framesPassed = 0;
-	bool FramesPerSecond::firstCall = false;
-
-	double FramesPerSecond::GetFPS() {
-		return FPS;
-	}
-
-	void FramesPerSecond::UpdateFPS(bool reset) {
-
-		static std::chrono::high_resolution_clock dtimer;
-
-		static auto start = dtimer.now();
-		static auto stop = dtimer.now();
-
-		if (firstCall || reset) {
-			stop = dtimer.now();
-			start = dtimer.now();
-			firstCall = false;
-		}
-		else
-			stop = dtimer.now();
-
-
-		std::chrono::duration<double> elapsed_time = stop - start;
-
-		framesPassed++;
-
-		if (elapsed_time.count() > 0.25) {
-			FPS = framesPassed / elapsed_time.count();
-			start = dtimer.now();
-			framesPassed = 0;
-		}
-	}
-
-	DeltaTime::DeltaTime() {
-
-		// WARNING -> DeltaTime functions have not been tested for accuracy!
-
-		std::chrono::high_resolution_clock dtimer;
-
-		if (!silenced)
-			std::clog << "WARNING -> DeltaTime functions have not been tested for accuracy!" << std::endl;
-
-		start = dtimer.now();
-		stop = dtimer.now();
-
-		deltaTime = 0;
-		lastTime = 0;
-		firstCall = true;
-	}
-
-	double DeltaTime::GetDeltaTime() { // WARNING -> DeltaTime functions have not been tested for accuracy!
-		return deltaTime;
-	}
-
-	void DeltaTime::UpdateDeltaTime(bool reset) { // WARNING -> DeltaTime functions have not been tested for accuracy!
-
-		std::chrono::high_resolution_clock dtimer;
-
-		if (firstCall || reset) {
-			start = dtimer.now();
-			firstCall = false;
-		}
-
-		stop = dtimer.now();
-
-		deltaTime = std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(stop - start).count() / 1000;
-
-		start = stop;
 	}
 }

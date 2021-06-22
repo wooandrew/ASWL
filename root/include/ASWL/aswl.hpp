@@ -25,15 +25,8 @@
  * SOFTWARE.
 **/
 
-#include "ASWL/logger.hpp"
+#pragma once
 
-namespace ASWL::Logger {
-
-    void SetLogStream() {
-        std::clog.rdbuf(stream_buffer_clog_default__);
-    }
-    void SetLogStream(std::fstream& file) {
-        stream_buffer_current__ = file.rdbuf();
-        std::clog.rdbuf(stream_buffer_current__);
-    }
-}
+#ifdef ASWL_SILENCED
+#define __ASWL_SILENCED
+#endif

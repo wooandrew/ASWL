@@ -1,4 +1,4 @@
-// ASWL (c) 2021 Andrew Woo
+﻿// ASWL (c) 2021 Andrew Woo
 // Website: https://wooandrew.dev https://wooandrew.github.io
 // Email: seungminleader@gmail.com
 
@@ -25,15 +25,31 @@
  * SOFTWARE.
 **/
 
-#include "ASWL/logger.hpp"
+#include <iostream>
 
-namespace ASWL::Logger {
+#define ASWL_SILENCED
+#include <ASWL/aswl.hpp>
 
-    void SetLogStream() {
-        std::clog.rdbuf(stream_buffer_clog_default__);
-    }
-    void SetLogStream(std::fstream& file) {
-        stream_buffer_current__ = file.rdbuf();
-        std::clog.rdbuf(stream_buffer_current__);
-    }
+#include "tests/test.hpp"
+#include "tests/test_timers.hpp"
+
+int ParseReturn(std::pair<int, std::exception> _pair) {
+
+    if (_pair.first)
+        std::clog << "\tFAILURE\t\tEXCEPTION: " << _pair.second.what() << std::endl;
+    else
+        std::clog << "\tSUCCESS" << std::endl;
+
+    return std::abs( _pair.first);
+}
+
+int main(int argc, char* argv[]) {
+
+    int fails = 0;
+
+    fails += ParseReturn(TestET());
+    fails += ParseReturn(TestDT());
+    fails += ParseReturn(TestFPS());
+
+    return fails;
 }
