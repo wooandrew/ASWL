@@ -22,17 +22,17 @@ std::pair<int, std::exception> TestET() {
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         if (std::round(et.now()) != 2.f)
-            throw std::exception("ELAPSED TIME DOES NOT MATCH! 1 now()");
+            throw ASWL::Timers::time_exception("ELAPSED TIME DOES NOT MATCH! 1 now()");
 
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         if (std::round(et.lap()) != 4.f)
-            throw std::exception("ELAPSED TIME DOES NOT MATCH! lap()");
+            throw ASWL::Timers::time_exception("ELAPSED TIME DOES NOT MATCH! lap()");
 
         std::this_thread::sleep_for(std::chrono::seconds(2));
 
         if (std::round(et.now()) != 2.f)
-            throw std::exception("ELAPSED TIME DOES NOT MATCH! 2 now()");
+            throw ASWL::Timers::time_exception("ELAPSED TIME DOES NOT MATCH! 2 now()");
 
         et.stop();
 
@@ -45,7 +45,7 @@ std::pair<int, std::exception> TestET() {
         return { -1, e };
     }
 
-    return { -1, std::exception("UNEXPECTED ERROR OCCURED!")};
+    return { -1, std::runtime_error("UNEXPECTED ERROR OCCURED!")};
 }
 
 std::pair<int, std::exception> TestDT() {
@@ -61,7 +61,7 @@ std::pair<int, std::exception> TestDT() {
         dt.UpdateDeltaTime();
         
         if (std::floor(dt.GetDeltaTime()) != 2.f)
-            throw std::exception("DELTA TIME DOES NOT MATCH! 2s");
+            throw std::runtime_error("DELTA TIME DOES NOT MATCH! 2s");
 
 
         dt.UpdateDeltaTime();
@@ -69,14 +69,14 @@ std::pair<int, std::exception> TestDT() {
         dt.UpdateDeltaTime();
 
         if (std::floor(dt.GetDeltaTime()) != 4.f)
-            throw std::exception("DELTA TIME DOES NOT MATCH! 4s");
+            throw std::runtime_error("DELTA TIME DOES NOT MATCH! 4s");
 
         dt.UpdateDeltaTime();
         std::this_thread::sleep_for(std::chrono::seconds(10));
         dt.UpdateDeltaTime();
 
         if (std::floor(dt.GetDeltaTime()) != 10.f)
-            throw std::exception("DELTA TIME DOES NOT MATCH! 10s");
+            throw std::runtime_error("DELTA TIME DOES NOT MATCH! 10s");
     }
     catch (std::exception& e) {
         return { -1, e };
@@ -102,7 +102,7 @@ std::pair<int, std::exception> TestFPS() {
         }
 
         if (std::round(fps.GetFPS()) != 5.f)
-            throw std::exception("FRAMES PER SECOND DOES NOT MATCH! 200ms");
+            throw std::runtime_error("FRAMES PER SECOND DOES NOT MATCH! 200ms");
 
         fps.Update(true);
         for (int i = 0; i < 30; i++) {
@@ -112,7 +112,7 @@ std::pair<int, std::exception> TestFPS() {
         }
 
         if (std::round(fps.GetFPS()) != 3.f)
-            throw std::exception("FRAMES PER SECOND DOES NOT MATCH! 300ms");
+            throw std::runtime_error("FRAMES PER SECOND DOES NOT MATCH! 300ms");
 
         fps.Update(true);
         for (int i = 0; i < 10; i++) {
@@ -122,7 +122,7 @@ std::pair<int, std::exception> TestFPS() {
         }
 
         if (std::round(fps.GetFPS()) != 2.f)
-            throw std::exception("FRAMES PER SECOND DOES NOT MATCH! 500ms");
+            throw std::runtime_error("FRAMES PER SECOND DOES NOT MATCH! 500ms");
     }
     catch (std::exception& e) {
         return { -1, e };
